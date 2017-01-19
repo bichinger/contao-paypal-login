@@ -1,0 +1,68 @@
+<div id="tl_buttons">
+</div>
+<div class="paypal-settings-container">
+    <h2 class="paypal-settings-container--headline"><?php echo $GLOBALS['TL_LANG']['tl_paypal_login_settings']['paypal_settings_headline'];?></h2>
+    <?php if(!empty($this->errors)):?>
+        <div class="paypal-settings-form-errors-container">
+            <h3><?php echo $this->errors_headline;?></h3>
+            <ul>
+            <?php foreach($this->errors as $error):?>
+                <li><?php echo $error;?></li>
+            <?php endforeach;?>
+            </ul>
+        </div>
+    <?php endif;?>
+    <form class="paypal-settings-form tl_form" method="post">
+        <input type="hidden" name="REQUEST_TOKEN" value="<?php echo REQUEST_TOKEN;?>">
+        <div class="tl_formbody_edit">
+            <div class="tl_tbox paypal-settings-form--row">
+                <h3 class="paypal-settings-form-row--headline"><label for="paypal_client_id"><?php echo $GLOBALS['TL_LANG']['tl_paypal_login_settings']['paypal_client_id'];?></label></h3>
+                <input type="text" name="paypal_data[paypal_client_id]" id="paypal_client_id" value="<?php echo $this->settings->getClientId();?>" class="tl_text">
+                <p class="tl_help tl_tip" title=""><?php echo $GLOBALS['TL_LANG']['tl_paypal_login_settings']['paypal_client_id_help'];?></p>
+            </div>
+            <div class="tl_tbox paypal-settings-form--row">
+                <h3 class="paypal-settings-form-row--headline"><label for="paypal_secret"><?php echo $GLOBALS['TL_LANG']['tl_paypal_login_settings']['paypal_secret'];?></label></h3>
+                <input type="text" name="paypal_data[paypal_secret]" id="paypal_secret" value="<?php echo $this->settings->getSecret();?>" class="tl_text">
+                <p class="tl_help tl_tip" title=""><?php echo $GLOBALS['TL_LANG']['tl_paypal_login_settings']['paypal_secret_help'];?></p>
+            </div>
+            <div class="tl_tbox paypal-settings-form--row">
+                <h3 class="paypal-settings-form-row--headline"><label for="paypal_mode"><?php echo $GLOBALS['TL_LANG']['tl_paypal_login_settings']['paypal_mode'];?></label></h3>
+                <select class="tl_select tl_chosen" name="paypal_data[paypal_mode]" id="paypal_mode">
+                    <option value="sandbox" <?php echo ($this->settings->getMode() == "sandbox")?"selected":"";?>>Sandbox</option>
+                    <option value="production" <?php echo ($this->settings->getMode() == "production")?"selected":"";?>>Production</option>
+                </select>
+                <p class="tl_help tl_tip" title=""><?php echo $GLOBALS['TL_LANG']['tl_paypal_login_settings']['paypal_mode_help'];?></p>
+            </div>
+
+            <hr>
+            <div class="tl_tbox paypal-settings-form--row">
+                <h3 class="paypal-settings-form-row--headline"><label for="paypal_item_name"><?php echo $GLOBALS['TL_LANG']['tl_paypal_login_settings']['paypal_item_name'];?></label></h3>
+                <input type="text" name="paypal_data[paypal_item_name]" id="paypal_item_name" value="<?php echo $this->settings->getItemName();?>" class="tl_text">
+                <p class="tl_help tl_tip" title=""><?php echo $GLOBALS['TL_LANG']['tl_paypal_login_settings']['paypal_item_name_help'];?></p>
+            </div>
+            <div class="tl_tbox paypal-settings-form--row">
+                <h3 class="paypal-settings-form-row--headline"><label for="paypal_item_amount"><?php echo $GLOBALS['TL_LANG']['tl_paypal_login_settings']['paypal_item_amount'];?></label></h3>
+                <input type="text" name="paypal_data[paypal_item_amount]" id="paypal_item_amount" value="<?php echo $this->settings->getItemAmount();?>" class="tl_text">
+                <p class="tl_help tl_tip" title=""><?php echo $GLOBALS['TL_LANG']['tl_paypal_login_settings']['paypal_item_amount_help'];?></p>
+            </div>
+            <hr>
+            <div class="tl_tbox paypal-settings-form--row">
+                <h3 class="paypal-settings-form-row--headline"><label for="paypal_transaction_description"><?php echo $GLOBALS['TL_LANG']['tl_paypal_login_settings']['paypal_transaction_description'];?></label></h3>
+                <input type="text" name="paypal_data[paypal_transaction_description]" id="paypal_transaction_description" value="<?php echo $this->settings->getTransactionDescription();?>" class="tl_text">
+                <p class="tl_help tl_tip" title=""><?php echo $GLOBALS['TL_LANG']['tl_paypal_login_settings']['paypal_transaction_description_help'];?></p>
+            </div>
+            <div class="tl_tbox paypal-settings-form--row">
+                <h3 class="paypal-settings-form-row--headline"><label for="paypal_currency_code"><?php echo $GLOBALS['TL_LANG']['tl_paypal_login_settings']['paypal_currency_code'];?></label></h3>
+                <select class="tl_select tl_chosen" name="paypal_data[paypal_currency_code]" id="paypal_currency_code">
+                    <option value="EUR" <?php echo ($this->settings->getCurrencyCode() == "EUR")?"selected":"";?>>EUR</option>
+                    <option value="USD" <?php echo ($this->settings->getCurrencyCode() == "USD")?"selected":"";?>>USD</option>
+                </select>
+                <p class="tl_help tl_tip" title=""><?php echo $GLOBALS['TL_LANG']['tl_paypal_login_settings']['paypal_currency_code_help'];?></p>
+            </div>
+            <div class="tl_tbox paypal-settings-form--row">
+                <button type="submit" class="tl_submit"><?php echo $GLOBALS['TL_LANG']['tl_paypal_login_settings']['save_settings'];?></button>
+            </div>
+        </div>
+    </form>
+
+</div>

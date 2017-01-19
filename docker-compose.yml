@@ -1,0 +1,25 @@
+version: '2'
+services:
+  mysql:
+    image: bichinger/docker-percona:5.6-3
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=733Rg(36a4z27+99
+      - PERCONA_CREATE_DATABASE=contao
+    volumes:
+      - ./_local/mysql/prod:/var/lib/mysql
+
+  paypal-login:
+    image: bichinger/docker-contao:3.5.24
+    links:
+      - mysql
+    environment:
+      - CONTAO_MYSQL_HOST=mysql
+      - CONTAO_MYSQL_USERNAME=root
+      - CONTAO_MYSQL_PASSWORD=733Rg(36a4z27+99
+      - CONTAO_MYSQL_DATABASE=contao
+    ports:
+      - "80:80"
+    volumes:
+      - ./src/:/var/www/html/system/modules/bichinger-paypal-login
