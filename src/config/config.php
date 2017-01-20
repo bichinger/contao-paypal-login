@@ -15,8 +15,8 @@
 
 $GLOBALS['BE_MOD']['bichinger-paypal-login'] = array(
     'paypal-login-settings' => array(
+        'tables' => array('tl_paypal_login_settings'),
         'icon' => 'system/modules/bichinger-paypal-login/assets/icon.png',
-        'callback' => 'Bichinger\PayPalLogin\Modules\Backend\SettingsModule',
     )
 );
 

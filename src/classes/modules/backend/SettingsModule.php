@@ -6,8 +6,8 @@
 namespace Bichinger\PayPalLogin\Modules\Backend;
 
 use \Bichinger\PayPalLogin\PayPalRequest;
-use \Bichinger\PayPalLogin\Settings;
-use Bichinger\PayPalLogin\ValidationException;
+use \Bichinger\PayPalLogin\PayPalSettings;
+use Bichinger\PayPalLogin\Exception\ValidationException;
 
 
 /**
@@ -33,22 +33,9 @@ class SettingsModule extends \BackendModule
     protected function compile()
     {
         $GLOBALS['TL_CSS'][] = 'system/modules/bichinger-paypal-login/assets/css/settings.css';
-        $form_data = \Input::post('paypal_data');
-
-
-        if (!empty($form_data)) {
-
-            try {
-                Settings::save($form_data);
-                header("Location: main.php?do=paypal-login-settings");
-            } catch (ValidationException $e) {
-                $this->Template->errors_headline = $e->getMessage();
-                $this->Template->errors = $e->getErrors();
-            }
+        $act = \Input::get('act');
+        if (empty($act)) {
+            header("Location: " . \Environment::get('base') . "/contao/main.php?do=paypal-login-settings&act=edit&id=1");
         }
-
-        $this->Template->settings = Settings::getInstance();
-        PayPalRequest::redirectToPayPal($this->Template->settings);
-
     }
 }

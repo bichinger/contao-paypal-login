@@ -3,11 +3,13 @@
 namespace Bichinger\PayPalLogin;
 
 
+use Bichinger\UniqueId;
 use PayPal\Api\Amount;
 use PayPal\Api\Details;
 use PayPal\Api\Item;
 use PayPal\Api\ItemList;
 use PayPal\Api\Payer;
+use PayPal\Api\PayerInfo;
 use PayPal\Api\Payment;
 use PayPal\Api\RedirectUrls;
 use PayPal\Api\Transaction;
@@ -24,7 +26,23 @@ class PayPalRequest
 {
 
 
-    private static function getApiContext(&$paypalLoginSettings)
+    public static function checkCredentials(&$paypalLoginSettings)
+    {
+        $apiContext = self::getApiContext($paypalLoginSettings);
+        try {
+            $params = array('count' => 1, 'start_index' => 1);
+            $payments = Payment::all($params, $apiContext);
+
+            return true;
+        } catch (PayPalInvalidCredentialException $ex) {
+            return false;
+        } catch (\Exception $ex) {
+            return false;
+        }
+
+    }
+
+    public static function getApiContext(&$paypalLoginSettings)
     {
         $apiContext = new ApiContext(
             new OAuthTokenCredential(
@@ -45,38 +63,13 @@ class PayPalRequest
         return $apiContext;
     }
 
-
-    public static function checkCredentials(&$paypalLoginSettings)
-    {
-        $apiContext = self::getApiContext($paypalLoginSettings);
-        try {
-            $params = array('count' => 1, 'start_index' => 1);
-            $payments = Payment::all($params, $apiContext);
-
-            return true;
-        } catch (PayPalInvalidCredentialException $ex) {
-            echo "<pre>";
-            var_dump($ex->getMessage());
-            die();
-            return false;
-        } catch (\Exception $ex) {
-            echo "<pre>";
-            var_dump($ex->getMessage());
-            die();
-            return false;
-        }
-
-    }
-
-
     /**
-     * @param Settings $paypalLoginSettings
+     * @param PayPalSettings $paypalLoginSettings
      */
-    public static function redirectToPayPal(Settings $paypalLoginSettings)
+    public static function redirectMemeberToPayPal($member_id, PayPalSettings $paypalLoginSettings)
     {
 
         $apiContext = self::getApiContext($paypalLoginSettings);
-
 
         // Create new payer and method
         $payer = new Payer();
@@ -126,18 +119,23 @@ class PayPalRequest
         try {
             $payment->create($apiContext);
 
+            Paygate::updateMemberPaymentId($payment->getId(), $member_id);
+
             // Get PayPal redirect URL and redirect user
             $approvalUrl = $payment->getApprovalLink();
 
+            // REDIRECT USER TO $approvalUrl
             header('Location: ' . $approvalUrl);
 
-            // REDIRECT USER TO $approvalUrl
         } catch (PayPal\Exception\PayPalConnectionException $ex) {
-            echo $ex->getCode();
-            echo $ex->getData();
-            die($ex);
+            echo "<pre>";
+            var_dump($ex->getData());
+            var_dump($ex->getMessage());
+            die();
         } catch (Exception $ex) {
-            die($ex);
+            echo "<pre>";
+            var_dump($ex->getMessage());
+            die();
         }
     }
 }

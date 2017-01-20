@@ -21,15 +21,20 @@ $GLOBALS['TL_DCA']['tl_paypal_login_settings'] = array
     // Config
     'config' => array
     (
-        'dataContainer'               => 'Table',
-        'enableVersioning'            => true,
+        'dataContainer' => 'Table',
+        'enableVersioning' => true,
+        'notCreatable' => true,
+        'notCopyable' => true,
+        'notDeletable' => true,
         'sql' => array
         (
             'keys' => array
             (
                 'id' => 'primary'
             )
-        )
+        ),
+        'onsubmit_callback' => array(array('Bichinger\PayPalLogin\PayPalSettings', "validateCredentials")),
+        'onload_callback' => array(array('Bichinger\PayPalLogin\PayPalSettings', "initSettings"))
     ),
 
     // List
@@ -37,52 +42,25 @@ $GLOBALS['TL_DCA']['tl_paypal_login_settings'] = array
     (
         'sorting' => array
         (
-            'mode'                    => 1,
-            'fields'                  => array(''),
-            'flag'                    => 1
+            'mode' => 0,
+            'fields' => array('paypal_client_id'),
+            'flag' => 1
         ),
         'label' => array
         (
-            'fields'                  => array(''),
-            'format'                  => '%s'
+            'fields' => array('paypal_client_id'),
+            'format' => 'PayPal Settings'
         ),
         'global_operations' => array
-        (
-            'all' => array
-            (
-                'label'               => &$GLOBALS['TL_LANG']['MSC']['all'],
-                'href'                => 'act=select',
-                'class'               => 'header_edit_all',
-                'attributes'          => 'onclick="Backend.getScrollOffset();" accesskey="e"'
-            )
-        ),
+        (),
         'operations' => array
         (
             'edit' => array
             (
-                'label'               => &$GLOBALS['TL_LANG']['tl_paypal_login_settings']['edit'],
-                'href'                => 'act=edit',
-                'icon'                => 'edit.gif'
+                'label' => &$GLOBALS['TL_LANG']['tl_paypal_login_settings']['edit'],
+                'href' => 'act=edit',
+                'icon' => 'edit.gif'
             ),
-            'copy' => array
-            (
-                'label'               => &$GLOBALS['TL_LANG']['tl_paypal_login_settings']['copy'],
-                'href'                => 'act=copy',
-                'icon'                => 'copy.gif'
-            ),
-            'delete' => array
-            (
-                'label'               => &$GLOBALS['TL_LANG']['tl_paypal_login_settings']['delete'],
-                'href'                => 'act=delete',
-                'icon'                => 'delete.gif',
-                'attributes'          => 'onclick="if(!confirm(\'' . $GLOBALS['TL_LANG']['MSC']['deleteConfirm'] . '\'))return false;Backend.getScrollOffset()"'
-            ),
-            'show' => array
-            (
-                'label'               => &$GLOBALS['TL_LANG']['tl_paypal_login_settings']['show'],
-                'href'                => 'act=show',
-                'icon'                => 'show.gif'
-            )
         )
     ),
 
@@ -101,14 +79,14 @@ $GLOBALS['TL_DCA']['tl_paypal_login_settings'] = array
     // Palettes
     'palettes' => array
     (
-        '__selector__'                => array(''),
-        'default'                     => '{title_legend},title;'
+        '__selector__' => array(),
+        'default' => 'paypal_client_id,paypal_secret;paypal_transaction_description,paypal_item_amount,paypal_item_name;paypal_currency_code,paypal_mode;member_group,redirect_after_approval,redirect_after_error'
     ),
 
     // Subpalettes
     'subpalettes' => array
     (
-        ''                            => ''
+        '' => ''
     ),
 
     // Fields
@@ -116,73 +94,113 @@ $GLOBALS['TL_DCA']['tl_paypal_login_settings'] = array
     (
         'id' => array
         (
-            'sql'                     => "int(10) unsigned NOT NULL auto_increment"
+            'sql' => "int(10) unsigned NOT NULL auto_increment"
         ),
         'tstamp' => array
         (
-            'sql'                     => "int(10) unsigned NOT NULL default '0'"
+            'sql' => "int(10) unsigned NOT NULL default '0'"
         ),
         'paypal_client_id' => array
         (
-            'label'                   => &$GLOBALS['TL_LANG']['tl_paypal_login_settings']['paypal_client_id'],
-            'exclude'                 => true,
-            'inputType'               => 'text',
-            'default'                 => '',
-            'eval'                    => array('mandatory'=>true, 'maxlength'=>255),
-            'sql'                     => "varchar(255) NOT NULL default ''"
+            'label' => &$GLOBALS['TL_LANG']['tl_paypal_login_settings']['paypal_client_id'],
+            'exclude' => true,
+            'inputType' => 'text',
+            'default' => '',
+            'eval' => array('mandatory' => true, 'maxlength' => 255),
+            'sql' => "varchar(255) NOT NULL default ''"
         ),
         'paypal_secret' => array
         (
-            'label'                   => &$GLOBALS['TL_LANG']['tl_paypal_login_settings']['paypal_secret'],
-            'exclude'                 => true,
-            'inputType'               => 'text',
-            'default'                 => '',
-            'eval'                    => array('mandatory'=>true, 'maxlength'=>255),
-            'sql'                     => "varchar(255) NOT NULL default ''"
+            'label' => &$GLOBALS['TL_LANG']['tl_paypal_login_settings']['paypal_secret'],
+            'exclude' => true,
+            'inputType' => 'text',
+            'default' => '',
+            'eval' => array('mandatory' => true, 'maxlength' => 255),
+            'sql' => "varchar(255) NOT NULL default ''"
         ),
         'paypal_transaction_description' => array
         (
-            'label'                   => &$GLOBALS['TL_LANG']['tl_paypal_login_settings']['paypal_transaction_description'],
-            'exclude'                 => true,
-            'inputType'               => 'text',
-            'eval'                    => array('mandatory'=>true, 'maxlength'=>255),
-            'sql'                     => "varchar(255) NOT NULL default ''"
+            'label' => &$GLOBALS['TL_LANG']['tl_paypal_login_settings']['paypal_transaction_description'],
+            'exclude' => true,
+            'inputType' => 'text',
+            'eval' => array('mandatory' => true, 'maxlength' => 255),
+            'sql' => "varchar(255) NOT NULL default ''"
         ),
 
         'paypal_item_amount' => array
         (
-            'label'                   => &$GLOBALS['TL_LANG']['tl_paypal_login_settings']['paypal_item_amount'],
-            'exclude'                 => true,
-            'inputType'               => 'text',
-            'eval'                    => array('mandatory'=>true, 'maxlength'=>255),
-            'sql'                     => "varchar(255) NOT NULL default ''"
+            'label' => &$GLOBALS['TL_LANG']['tl_paypal_login_settings']['paypal_item_amount'],
+            'exclude' => true,
+            'inputType' => 'text',
+            'eval' => array('mandatory' => true, 'maxlength' => 255, 'rgxp' => 'digit'),
+            'sql' => "varchar(255) NOT NULL default ''"
         ),
 
         'paypal_item_name' => array
         (
-            'label'                   => &$GLOBALS['TL_LANG']['tl_paypal_login_settings']['paypal_item_name'],
-            'exclude'                 => true,
-            'inputType'               => 'text',
-            'eval'                    => array('mandatory'=>true, 'maxlength'=>255),
-            'sql'                     => "varchar(255) NOT NULL default ''"
+            'label' => &$GLOBALS['TL_LANG']['tl_paypal_login_settings']['paypal_item_name'],
+            'exclude' => true,
+            'inputType' => 'text',
+            'eval' => array('mandatory' => true, 'maxlength' => 255),
+            'sql' => "varchar(255) NOT NULL default ''"
         ),
         'paypal_currency_code' => array
         (
-            'label'                   => &$GLOBALS['TL_LANG']['tl_paypal_login_settings']['paypal_currency_code'],
-            'exclude'                 => true,
-            'inputType'               => 'text',
-            'default'                 => 'EUR',
-            'eval'                    => array('mandatory'=>true, 'maxlength'=>3),
-            'sql'                     => "varchar(3) NOT NULL default 'EUR'"
+            'label' => &$GLOBALS['TL_LANG']['tl_paypal_login_settings']['paypal_currency_code'],
+            'exclude' => true,
+            'inputType' => 'text',
+            'default' => 'EUR',
+            'eval' => array('mandatory' => true, 'maxlength' => 3),
+            'sql' => "varchar(3) NOT NULL default 'EUR'"
         ),
         'paypal_mode' => array
         (
-            'label'                   => &$GLOBALS['TL_LANG']['tl_paypal_login_settings']['paypal_mode'],
-            'exclude'                 => true,
-            'inputType'               => 'text',
-            'default'                 => 'sandbox',
-            'eval'                    => array('mandatory'=>true, 'maxlength'=>12),
-            'sql'                     => "varchar(12) NOT NULL default 'sandbox'"
-        )
+            'label' => &$GLOBALS['TL_LANG']['tl_paypal_login_settings']['paypal_mode'],
+            'exclude' => true,
+            'inputType' => 'text',
+            'default' => 'sandbox',
+            'eval' => array('mandatory' => true, 'maxlength' => 12),
+            'sql' => "varchar(12) NOT NULL default 'sandbox'"
+        ),
+        'member_group' => array
+        (
+            'label' => &$GLOBALS['TL_LANG']['tl_member']['groups'],
+            'exclude' => true,
+            'filter' => true,
+            'inputType' => 'select',
+            'foreignKey' => 'tl_member_group.name',
+            'eval' => array('multiple' => false),
+            'sql' => "int(10) unsigned NOT NULL default '0'",
+        ),
+        'redirect_after_approval' => array
+        (
+            'label' => &$GLOBALS['TL_LANG']['tl_paypal_login_settings']['redirect_after_approval'],
+            'exclude' => true,
+            'inputType' => 'pageTree',
+            'foreignKey' => 'tl_page.title',
+            'eval' => array('fieldType' => 'radio'),
+            'sql' => "int(10) unsigned NOT NULL default '0'",
+            'relation' => array('type' => 'hasOne', 'load' => 'lazy')
+        ),
+        'redirect_after_error' => array
+        (
+            'label' => &$GLOBALS['TL_LANG']['tl_paypal_login_settings']['redirect_after_error'],
+            'exclude' => true,
+            'inputType' => 'pageTree',
+            'foreignKey' => 'tl_page.title',
+            'eval' => array('fieldType' => 'radio'),
+            'sql' => "int(10) unsigned NOT NULL default '0'",
+            'relation' => array('type' => 'hasOne', 'load' => 'lazy')
+        ),
+        'redirect_after_cancel' => array
+        (
+            'label' => &$GLOBALS['TL_LANG']['tl_paypal_login_settings']['redirect_after_cancel'],
+            'exclude' => true,
+            'inputType' => 'pageTree',
+            'foreignKey' => 'tl_page.title',
+            'eval' => array('fieldType' => 'radio'),
+            'sql' => "int(10) unsigned NOT NULL default '0'",
+            'relation' => array('type' => 'hasOne', 'load' => 'lazy')
+        ),
     )
 );

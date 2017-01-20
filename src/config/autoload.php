@@ -28,7 +28,8 @@ ClassLoader::addClasses(array
 (
 	// Classes
 	'Bichinger\PayPalLogin\PayPalRequest'                        => 'system/modules/bichinger-paypal-login/classes/Bichinger/PayPalLogin/PayPalRequest.php',
-	'Bichinger\PayPalLogin\Settings'                             => 'system/modules/bichinger-paypal-login/classes/Bichinger/PayPalLogin/Settings.php',
+	'Bichinger\PayPalLogin\PayPalSettings'                             => 'system/modules/bichinger-paypal-login/classes/Bichinger/PayPalLogin/PayPalSettings.php',
+	'Bichinger\PayPalLogin\Endpoint'                             => 'system/modules/bichinger-paypal-login/classes/Bichinger/PayPalLogin/Endpoint.php',
 	'Composer\Autoload\ClassLoader'                              => 'system/modules/bichinger-paypal-login/classes/lib/PayPal-PHP-SDK/composer/ClassLoader.php',
 	'PayPal\Api\Address'                                         => 'system/modules/bichinger-paypal-login/classes/lib/PayPal-PHP-SDK/paypal/rest-api-sdk-php/lib/PayPal/Api/Address.php',
 	'PayPal\Api\Agreement'                                       => 'system/modules/bichinger-paypal-login/classes/lib/PayPal-PHP-SDK/paypal/rest-api-sdk-php/lib/PayPal/Api/Agreement.php',
@@ -369,14 +370,9 @@ ClassLoader::addClasses(array
 	'Psr\Log\NullLogger'                                         => 'system/modules/bichinger-paypal-login/classes/lib/PayPal-PHP-SDK/psr/log/Psr/Log/NullLogger.php',
 	'Psr\Log\Test\LoggerInterfaceTest'                           => 'system/modules/bichinger-paypal-login/classes/lib/PayPal-PHP-SDK/psr/log/Psr/Log/Test/LoggerInterfaceTest.php',
 	'Bichinger\PayPalLogin\Modules\Backend\SettingsModule'       => 'system/modules/bichinger-paypal-login/classes/modules/backend/SettingsModule.php',
-	'Bichinger\PayPalLogin\ValidationException'                  => 'system/modules/bichinger-paypal-login/classes/Bichinger/PayPalLogin/ValidationException.php',
-));
-
-
-/**
- * Register the templates
- */
-TemplateLoader::addFiles(array
-(
-	'be_paypal_settings' => 'system/modules/bichinger-paypal-login/templates/backend',
+	'Bichinger\PayPalLogin\ValidationException'                  => 'system/modules/bichinger-paypal-login/classes/Bichinger/PayPalLogin/Exception/ValidationException.php',
+	'Bichinger\PayPalLogin\PaymentException'                  => 'system/modules/bichinger-paypal-login/classes/Bichinger/PayPalLogin/Exception/PaymentException.php',
+	'Bichinger\PayPalLogin\MemberForPaymentNotFoundException'                  => 'system/modules/bichinger-paypal-login/classes/Bichinger/PayPalLogin/Exception/MemberForPaymentNotFoundException.php',
+	'Bichinger\PayPalLogin\Paygate'                  => 'system/modules/bichinger-paypal-login/classes/Bichinger/PayPalLogin/Paygate.php',
+	'Bichinger\Helper\UrlHelper'                  => 'system/modules/bichinger-paypal-login/classes/Bichinger/Helper/UrlHelper.php',
 ));
