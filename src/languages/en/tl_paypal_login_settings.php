@@ -22,4 +22,6 @@ $GLOBALS['TL_LANG']['tl_paypal_login_settings']['paypal_currency_code'] = array(
 $GLOBALS['TL_LANG']['tl_paypal_login_settings']['member_group'] = array("Member group to put the meber into", "... after approval");
 $GLOBALS['TL_LANG']['tl_paypal_login_settings']['redirect_after_approval'] = array("Page to redirect after successfully approval", "");
 $GLOBALS['TL_LANG']['tl_paypal_login_settings']['redirect_after_error'] = array("Page to redirect after error during payment", "");
+$GLOBALS['TL_LANG']['tl_paypal_login_settings']['redirect_after_cancel'] = array("Page to redirect after canceling payment", "");
+$GLOBALS['TL_LANG']['tl_paypal_login_settings']['member_group'] = array("Member Group for approved members", "");
 

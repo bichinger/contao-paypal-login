@@ -80,7 +80,7 @@ $GLOBALS['TL_DCA']['tl_paypal_login_settings'] = array
     'palettes' => array
     (
         '__selector__' => array(),
-        'default' => 'paypal_client_id,paypal_secret;paypal_transaction_description,paypal_item_amount,paypal_item_name;paypal_currency_code,paypal_mode;member_group,redirect_after_approval,redirect_after_error'
+        'default' => 'paypal_client_id,paypal_secret;paypal_transaction_description,paypal_item_amount,paypal_item_name;paypal_currency_code,paypal_mode;member_group,redirect_after_approval,redirect_after_error, redirect_after_cancel'
     ),
 
     // Subpalettes
@@ -148,7 +148,8 @@ $GLOBALS['TL_DCA']['tl_paypal_login_settings'] = array
         (
             'label' => &$GLOBALS['TL_LANG']['tl_paypal_login_settings']['paypal_currency_code'],
             'exclude' => true,
-            'inputType' => 'text',
+            'inputType' => 'select',
+            'options' => array('EUR', 'USD'),
             'default' => 'EUR',
             'eval' => array('mandatory' => true, 'maxlength' => 3),
             'sql' => "varchar(3) NOT NULL default 'EUR'"
@@ -157,14 +158,15 @@ $GLOBALS['TL_DCA']['tl_paypal_login_settings'] = array
         (
             'label' => &$GLOBALS['TL_LANG']['tl_paypal_login_settings']['paypal_mode'],
             'exclude' => true,
-            'inputType' => 'text',
+            'inputType' => 'select',
+            'options' => array('sandbox' => 'Sandbox', 'production' => 'Production'),
             'default' => 'sandbox',
             'eval' => array('mandatory' => true, 'maxlength' => 12),
             'sql' => "varchar(12) NOT NULL default 'sandbox'"
         ),
         'member_group' => array
         (
-            'label' => &$GLOBALS['TL_LANG']['tl_member']['groups'],
+            'label' => &$GLOBALS['TL_LANG']['tl_paypal_login_settings']['member_group'],
             'exclude' => true,
             'filter' => true,
             'inputType' => 'select',
