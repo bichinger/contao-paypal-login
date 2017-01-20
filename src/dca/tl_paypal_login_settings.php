@@ -162,7 +162,7 @@ $GLOBALS['TL_DCA']['tl_paypal_login_settings'] = array
             'filter' => true,
             'inputType' => 'select',
             'foreignKey' => 'tl_member_group.name',
-            'eval' => array('multiple' => false),
+            'eval' => array('multiple' => false,'mandatory' => true,),
             'sql' => "int(10) unsigned NOT NULL default '0'",
         ),
         'redirect_after_approval' => array
@@ -171,7 +171,7 @@ $GLOBALS['TL_DCA']['tl_paypal_login_settings'] = array
             'exclude' => true,
             'inputType' => 'pageTree',
             'foreignKey' => 'tl_page.title',
-            'eval' => array('fieldType' => 'radio'),
+            'eval' => array('fieldType' => 'radio','mandatory' => true,),
             'sql' => "int(10) unsigned NOT NULL default '0'",
             'relation' => array('type' => 'hasOne', 'load' => 'lazy')
         ),
@@ -181,7 +181,7 @@ $GLOBALS['TL_DCA']['tl_paypal_login_settings'] = array
             'exclude' => true,
             'inputType' => 'pageTree',
             'foreignKey' => 'tl_page.title',
-            'eval' => array('fieldType' => 'radio'),
+            'eval' => array('fieldType' => 'radio','mandatory' => true,),
             'sql' => "int(10) unsigned NOT NULL default '0'",
             'relation' => array('type' => 'hasOne', 'load' => 'lazy')
         ),
@@ -191,7 +191,7 @@ $GLOBALS['TL_DCA']['tl_paypal_login_settings'] = array
             'exclude' => true,
             'inputType' => 'pageTree',
             'foreignKey' => 'tl_page.title',
-            'eval' => array('fieldType' => 'radio'),
+            'eval' => array('fieldType' => 'radio','mandatory' => true,),
             'sql' => "int(10) unsigned NOT NULL default '0'",
             'relation' => array('type' => 'hasOne', 'load' => 'lazy')
         ),
