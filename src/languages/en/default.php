@@ -15,7 +15,6 @@
 /**
  * Miscellaneous
  */
-$GLOBALS['TL_LANG']['MSC'][''] = '';
 
 $GLOBALS['TL_LANG']['MSC']['validation_error'] = "Please review your data";
 $GLOBALS['TL_LANG']['MSC']['payment_approved'] = "Payment approved (ID: %s)";

@@ -15,7 +15,11 @@
 /**
  * Back end modules
  */
-$GLOBALS['TL_LANG']['MOD'][''] = array('', '');
+
+$GLOBALS['TL_LANG']['MOD']['bichinger-paypal-login'] 	= 'Paypal Login';
+
+$GLOBALS['TL_LANG']['MOD']['paypal-login-settings'][0] 	= 'Settings';
+$GLOBALS['TL_LANG']['MOD']['paypal-login-settings'][1] 	= 'Configuration Paypal Login';
 
 
 /**
