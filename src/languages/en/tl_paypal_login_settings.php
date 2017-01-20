@@ -10,8 +10,6 @@ $GLOBALS['TL_LANG']['tl_paypal_login_settings']['paypal_client_id'] = array("Pay
 
 $GLOBALS['TL_LANG']['tl_paypal_login_settings']['paypal_secret'] = array("PayPal App Secret", "See https://developer.paypal.com/developer/applications/");
 
-$GLOBALS['TL_LANG']['tl_paypal_login_settings']['paypal_transaction_description'] = array("PayPal transaction description", "Text that appears at paypal for customers");
-
 $GLOBALS['TL_LANG']['tl_paypal_login_settings']['paypal_item_amount'] = array("PayPal item amount", "total amount for item");
 
 $GLOBALS['TL_LANG']['tl_paypal_login_settings']['paypal_item_name'] = array("PayPal item name", "name for item");

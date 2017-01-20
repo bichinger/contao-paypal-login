@@ -80,7 +80,7 @@ $GLOBALS['TL_DCA']['tl_paypal_login_settings'] = array
     'palettes' => array
     (
         '__selector__' => array(),
-        'default' => 'paypal_client_id,paypal_secret;paypal_transaction_description,paypal_item_amount,paypal_item_name;paypal_currency_code,paypal_mode;member_group,redirect_after_approval,redirect_after_error, redirect_after_cancel'
+        'default' => 'paypal_client_id,paypal_secret,paypal_item_amount,paypal_item_name;paypal_currency_code,paypal_mode;member_group,redirect_after_approval,redirect_after_error, redirect_after_cancel'
     ),
 
     // Subpalettes
@@ -118,15 +118,6 @@ $GLOBALS['TL_DCA']['tl_paypal_login_settings'] = array
             'eval' => array('mandatory' => true, 'maxlength' => 255),
             'sql' => "varchar(255) NOT NULL default ''"
         ),
-        'paypal_transaction_description' => array
-        (
-            'label' => &$GLOBALS['TL_LANG']['tl_paypal_login_settings']['paypal_transaction_description'],
-            'exclude' => true,
-            'inputType' => 'text',
-            'eval' => array('mandatory' => true, 'maxlength' => 255),
-            'sql' => "varchar(255) NOT NULL default ''"
-        ),
-
         'paypal_item_amount' => array
         (
             'label' => &$GLOBALS['TL_LANG']['tl_paypal_login_settings']['paypal_item_amount'],

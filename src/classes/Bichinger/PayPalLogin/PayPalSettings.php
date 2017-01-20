@@ -43,9 +43,6 @@ class PayPalSettings
     /** @var */
     private $currency_code;
     /** @var */
-    private $transaction_description;
-
-    /** @var */
     private $mode;
 
 
@@ -154,7 +151,7 @@ class PayPalSettings
             $settings->setMemberGroup($result->insertId);
 
             // create initial settings row
-            \Database::getInstance()->prepare("REPLACE INTO tl_paypal_login_settings (id, paypal_client_id, paypal_secret, paypal_transaction_description, paypal_item_name, paypal_item_amount, paypal_currency_code, paypal_mode, member_group, redirect_after_approval, redirect_after_error, redirect_after_cancel) VALUES (1, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")->execute($settings->getClientId(), $settings->getSecret(), $settings->getTransactionDescription(), $settings->getItemName(), $settings->getItemAmount(), $settings->getCurrencyCode(), $settings->getMode(), $settings->getMemberGroup(), $settings->getRedirectAfterApproval(), $settings->getRedirectAfterError(), $settings->getRedirectAfterCancel());
+            \Database::getInstance()->prepare("REPLACE INTO tl_paypal_login_settings (id, paypal_client_id, paypal_secret, paypal_item_name, paypal_item_amount, paypal_currency_code, paypal_mode, member_group, redirect_after_approval, redirect_after_error, redirect_after_cancel) VALUES (1, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")->execute($settings->getClientId(), $settings->getSecret(), $settings->getItemName(), $settings->getItemAmount(), $settings->getCurrencyCode(), $settings->getMode(), $settings->getMemberGroup(), $settings->getRedirectAfterApproval(), $settings->getRedirectAfterError(), $settings->getRedirectAfterCancel());
         }
 
     }
@@ -185,7 +182,6 @@ class PayPalSettings
         $settings = new PayPalSettings();
         $settings->setClientId($settings_array['paypal_client_id']);
         $settings->setSecret($settings_array['paypal_secret']);
-        $settings->setTransactionDescription($settings_array['paypal_transaction_description']);
         $settings->setItemAmount($settings_array['paypal_item_amount']);
         $settings->setItemName($settings_array['paypal_item_name']);
         $settings->setCurrencyCode($settings_array['paypal_currency_code']);
@@ -205,7 +201,6 @@ class PayPalSettings
         $settings = new PayPalSettings();
         $settings->setClientId("");
         $settings->setSecret("");
-        $settings->setTransactionDescription("");
         $settings->setItemAmount("");
         $settings->setItemName("");
         $settings->setCurrencyCode("");
@@ -248,22 +243,6 @@ class PayPalSettings
     public function setSecret($secret)
     {
         $this->secret = $secret;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getTransactionDescription()
-    {
-        return $this->transaction_description;
-    }
-
-    /**
-     * @param mixed $transaction_description
-     */
-    public function setTransactionDescription($transaction_description)
-    {
-        $this->transaction_description = $transaction_description;
     }
 
     /**

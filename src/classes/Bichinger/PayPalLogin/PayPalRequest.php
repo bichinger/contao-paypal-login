@@ -99,8 +99,7 @@ class PayPalRequest
         // Set transaction object
         $transaction = new Transaction();
         $transaction->setAmount($amount)
-            ->setItemList($itemList)
-            ->setDescription($paypalLoginSettings->getTransactionDescription());
+            ->setItemList($itemList);
 
         // Set redirect urls
         $redirectUrls = new RedirectUrls();
