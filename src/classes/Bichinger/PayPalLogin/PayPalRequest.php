@@ -151,14 +151,14 @@ class PayPalRequest
 
         } catch (PayPal\Exception\PayPalConnectionException $ex) {
 
-            \System::log($ex->getMessage(), TL_ERROR);
+            \System::log($ex->getMessage(), __METHOD__, TL_ERROR);
             $url = UrlHelper::getUrlByPageId($paypalLoginSettings->getRedirectAfterError());
             header('Location: ' . $url);
             exit();
 
         } catch (Exception $ex) {
 
-            \System::log($ex->getMessage(), TL_ERROR);
+            \System::log($ex->getMessage(), __METHOD__, TL_ERROR);
             $url = UrlHelper::getUrlByPageId($paypalLoginSettings->getRedirectAfterError());
             header('Location: ' . $url);
             exit();

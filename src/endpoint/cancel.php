@@ -20,7 +20,7 @@ $token = \Input::get('token');
 if (!empty($token)) {
     // get paypal settings
     $settings = \Bichinger\PayPalLogin\PayPalSettings::getInstance();
-    \System::log($GLOBALS['TL_LANG']['MSC']['payment_cancel_error'], TL_ERROR);
+    \System::log($GLOBALS['TL_LANG']['MSC']['payment_cancel_error'], __METHOD__, TL_ERROR);
 
     // redirect to configured page
     $url = \Bichinger\Helper\UrlHelper::getUrlByPageId($settings->getRedirectAfterCancel());

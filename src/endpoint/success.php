@@ -26,17 +26,17 @@ if (!empty($paymentId) && !empty($token) && !empty($PayerID)) {
         $payment = \Bichinger\PayPalLogin\Endpoint::handlePayment($paymentId, $token, $PayerID);
         // complete registration
         \Bichinger\PayPalLogin\Paygate::approveMember($payment);
-        \System::log(sprintf($GLOBALS['TL_LANG']['MSC']['payment_approved'], $payment->getId()), TL_GENERAL);
+        \System::log(sprintf($GLOBALS['TL_LANG']['MSC']['payment_approved'], $payment->getId()), __METHOD__, TL_GENERAL);
 
     } catch (\Bichinger\PayPalLogin\Exception\PaymentException $e) {
         // redirect to configured error page
-        \System::log(sprintf($GLOBALS['TL_LANG']['MSC']['payment_exception_error'], $e->getMessage()), TL_ERROR);
+        \System::log(sprintf($GLOBALS['TL_LANG']['MSC']['payment_exception_error'], $e->getMessage()), __METHOD__, TL_ERROR);
         $url = \Bichinger\Helper\UrlHelper::getUrlByPageId($settings->getRedirectAfterError());
         header('Location: ' . $url);
         exit();
     } catch (\Bichinger\PayPalLogin\Exception\MemberForPaymentNotFoundException $e) {
         // redirect to configured error page
-        \System::log(sprintf($GLOBALS['TL_LANG']['MSC']['member_not_found_exception_error'], $e->getPayment()->getId()), TL_ERROR);
+        \System::log(sprintf($GLOBALS['TL_LANG']['MSC']['member_not_found_exception_error'], $e->getPayment()->getId()), __METHOD__, TL_ERROR);
         $url = \Bichinger\Helper\UrlHelper::getUrlByPageId($settings->getRedirectAfterError());
         header('Location: ' . $url);
         exit();

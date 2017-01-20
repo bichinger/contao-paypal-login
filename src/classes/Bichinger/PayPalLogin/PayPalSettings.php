@@ -111,6 +111,7 @@ class PayPalSettings
         $settings->setMemberGroup($settings_array['member_group']);
         $settings->setRedirectAfterApproval($settings_array['redirect_after_approval']);
         $settings->setRedirectAfterError($settings_array['redirect_after_error']);
+        $settings->setRedirectAfterCancel($settings_array['redirect_after_cancel']);
 
         return $settings;
     }

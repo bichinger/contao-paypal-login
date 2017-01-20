@@ -54,8 +54,8 @@ class Paygate
         // assign member to paypal-approved-group
         $member['groups'][] = $settings->getMemberGroup();
         $member['groups'] = serialize($member['groups']);
-        // update member and activate him
-        $res = \Database::getInstance()->prepare('UPDATE tl_member set groups = ?, disable = "", activation = "" WHERE id = ?')->execute($member['groups'], $member['id']);
+        // update member
+        $res = \Database::getInstance()->prepare('UPDATE tl_member set groups = ? WHERE id = ?')->execute($member['groups'], $member['id']);
 
         // redirect member to configured page
         $redirectAfterApprovalUrl = UrlHelper::getUrlByPageId($settings->getRedirectAfterApproval());
@@ -69,7 +69,7 @@ class Paygate
      * @param integer $member_id
      * @param array $member_data
      */
-    public function redirectMemberToPayPal($member_id, $member_data)
+    public function redirectMemberToPayPal($member_id, $member_data, $module)
     {
         // get paypal settings
         $settings = PayPalSettings::getInstance();
