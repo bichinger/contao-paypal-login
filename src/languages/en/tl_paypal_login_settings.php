@@ -7,9 +7,9 @@ $GLOBALS['TL_LANG']['tl_paypal_login_settings']['paypal_client_id'] = array("Pay
 
 $GLOBALS['TL_LANG']['tl_paypal_login_settings']['paypal_secret'] = array("PayPal App Secret", "Visit https://developer.paypal.com/developer/applications/ for further informations.");
 
-$GLOBALS['TL_LANG']['tl_paypal_login_settings']['paypal_item_amount'] = array("PayPal item amount", "Set the price");
+$GLOBALS['TL_LANG']['tl_paypal_login_settings']['paypal_item_amount'] = array("PayPal item price", "Set the price for the item.");
 
-$GLOBALS['TL_LANG']['tl_paypal_login_settings']['paypal_item_name'] = array("PayPal item name", "Set the name for the item");
+$GLOBALS['TL_LANG']['tl_paypal_login_settings']['paypal_item_name'] = array("PayPal item name", "Set the name for the item.");
 
 $GLOBALS['TL_LANG']['tl_paypal_login_settings']['paypal_mode'] = array("PayPal operation mode", "For testing, choose 'sandbox' to not make real transaction. Otherwise choose 'production'");
 
