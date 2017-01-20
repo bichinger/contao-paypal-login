@@ -23,4 +23,5 @@ $GLOBALS['BE_MOD']['bichinger-paypal-login'] = array(
 
 // Hooks
 
+// hook into member registration
 $GLOBALS['TL_HOOKS']['createNewUser'][] = array('Bichinger\PayPalLogin\Paygate', 'redirectMemberToPayPal');

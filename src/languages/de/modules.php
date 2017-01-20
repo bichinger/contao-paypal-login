@@ -18,7 +18,7 @@
 $GLOBALS['TL_LANG']['MOD']['bichinger-paypal-login'] 	= 'Paypal Login';
 
 $GLOBALS['TL_LANG']['MOD']['paypal-login-settings'][0] 	= 'Einstellungen';
-$GLOBALS['TL_LANG']['MOD']['paypal-login-settings'][1] 	= 'Konfiguration Paypal Login';
+$GLOBALS['TL_LANG']['MOD']['paypal-login-settings'][1] 	= 'Konfiguration des Paypal-Login Moduls';
 
 
 /**

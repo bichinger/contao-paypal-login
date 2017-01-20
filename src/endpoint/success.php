@@ -14,7 +14,7 @@ if (!isset($_POST['REQUEST_TOKEN'])) {
 // Initialize the system
 require('../../../../system/initialize.php');
 
-
+// get parameters
 $paymentId = \Input::get('paymentId');
 $token = \Input::get('token');
 $PayerID = \Input::get('PayerID');
@@ -29,13 +29,13 @@ if (!empty($paymentId) && !empty($token) && !empty($PayerID)) {
         \System::log(sprintf($GLOBALS['TL_LANG']['MSC']['payment_approved'], $payment->getId()), TL_GENERAL);
 
     } catch (\Bichinger\PayPalLogin\Exception\PaymentException $e) {
-
+        // redirect to configured error page
         \System::log(sprintf($GLOBALS['TL_LANG']['MSC']['payment_exception_error'], $e->getMessage()), TL_ERROR);
         $url = \Bichinger\Helper\UrlHelper::getUrlByPageId($settings->getRedirectAfterError());
         header('Location: ' . $url);
         exit();
     } catch (\Bichinger\PayPalLogin\Exception\MemberForPaymentNotFoundException $e) {
-
+        // redirect to configured error page
         \System::log(sprintf($GLOBALS['TL_LANG']['MSC']['member_not_found_exception_error'], $e->getPayment()->getId()), TL_ERROR);
         $url = \Bichinger\Helper\UrlHelper::getUrlByPageId($settings->getRedirectAfterError());
         header('Location: ' . $url);

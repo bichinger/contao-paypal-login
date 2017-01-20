@@ -6,11 +6,20 @@ namespace Bichinger\PayPalLogin\Exception;
 
 use Exception;
 
+/**
+ * Class ValidationException
+ * @package Bichinger\PayPalLogin\Exception
+ */
 class ValidationException extends \Exception
 {
 
+    /** @var array */
     private $errors;
 
+    /**
+     * ValidationException constructor.
+     * @param string $errors
+     */
     public function __construct($errors)
     {
         $this->setErrors($errors);
@@ -18,7 +27,7 @@ class ValidationException extends \Exception
     }
 
     /**
-     * @return mixed
+     * @return array
      */
     public function getErrors()
     {
@@ -26,7 +35,7 @@ class ValidationException extends \Exception
     }
 
     /**
-     * @param mixed $errors
+     * @param array $errors
      */
     public function setErrors($errors)
     {

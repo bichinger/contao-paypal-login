@@ -7,10 +7,17 @@ namespace Bichinger\PayPalLogin\Exception;
 use Exception;
 use PayPal\Api\Payment;
 
+/**
+ * Class PaymentException
+ * @package Bichinger\PayPalLogin\Exception
+ */
 class PaymentException extends \Exception
 {
 
+    /** @var Payment */
     private $payment;
+
+    /** @var string */
     private $reason;
 
     /**
@@ -41,7 +48,7 @@ class PaymentException extends \Exception
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getReason()
     {
@@ -49,7 +56,7 @@ class PaymentException extends \Exception
     }
 
     /**
-     * @param mixed $reason
+     * @param string $reason
      */
     public function setReason($reason)
     {

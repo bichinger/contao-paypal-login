@@ -5,6 +5,7 @@ namespace Bichinger\PayPalLogin\Exception;
 
 
 use Exception;
+use PayPal\Api\Payment;
 
 /**
  * Class MemberForPaymentNotFoundException
@@ -13,7 +14,7 @@ use Exception;
 class MemberForPaymentNotFoundException extends \Exception
 {
 
-    /** @var */
+    /** @var Payment */
     private $payment;
 
     /**
@@ -27,7 +28,7 @@ class MemberForPaymentNotFoundException extends \Exception
     }
 
     /**
-     * @return mixed
+     * @return Payment
      */
     public function getPayment()
     {
@@ -35,7 +36,7 @@ class MemberForPaymentNotFoundException extends \Exception
     }
 
     /**
-     * @param mixed $payment
+     * @param Payment $payment
      */
     public function setPayment($payment)
     {

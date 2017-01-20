@@ -30,95 +30,30 @@ class PayPalSettings
     /** @var null */
     protected static $_instance = null;
 
-    /** @var */
+    /** @var string */
     private $client_id;
-    /** @var */
+    /** @var string */
     private $secret;
 
-    /** @var */
+    /** @var string */
     private $item_amount;
-    /** @var */
+    /** @var string */
     private $item_name;
 
-    /** @var */
+    /** @var string */
     private $currency_code;
-    /** @var */
+    /** @var string */
     private $mode;
 
 
-    /** @var */
+    /** @var integer */
     private $member_group;
-    /** @var */
+    /** @var integer */
     private $redirect_after_approval;
-    /** @var */
+    /** @var integer */
     private $redirect_after_error;
-    /** @var */
+    /** @var integer */
     private $redirect_after_cancel;
-
-    /**
-     * @return mixed
-     */
-    public function getRedirectAfterCancel()
-    {
-        return $this->redirect_after_cancel;
-    }
-
-    /**
-     * @param mixed $redirect_after_cancel
-     */
-    public function setRedirectAfterCancel($redirect_after_cancel)
-    {
-        $this->redirect_after_cancel = $redirect_after_cancel;
-    }
-
-
-    /**
-     * @return mixed
-     */
-    public function getMemberGroup()
-    {
-        return $this->member_group;
-    }
-
-    /**
-     * @param mixed $member_group
-     */
-    public function setMemberGroup($member_group)
-    {
-        $this->member_group = $member_group;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getRedirectAfterApproval()
-    {
-        return $this->redirect_after_approval;
-    }
-
-    /**
-     * @param mixed $redirect_after_approval
-     */
-    public function setRedirectAfterApproval($redirect_after_approval)
-    {
-        $this->redirect_after_approval = $redirect_after_approval;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getRedirectAfterError()
-    {
-        return $this->redirect_after_error;
-    }
-
-    /**
-     * @param mixed $redirect_after_error
-     */
-    public function setRedirectAfterError($redirect_after_error)
-    {
-        $this->redirect_after_error = $redirect_after_error;
-    }
 
     /**
      * Validates paypal credentials
@@ -127,36 +62,21 @@ class PayPalSettings
      */
     public function validateCredentials($oDc)
     {
+        // get paypal settings
         $settings = PayPalSettings::getInstance();
         $settings->setClientId($oDc->activeRecord->paypal_client_id);
         $settings->setSecret($oDc->activeRecord->paypal_secret);
 
+        // do validation
         $valid = PayPalRequest::checkCredentials($settings);
         if (!$valid) {
             \Contao\Message::addError($GLOBALS['TL_LANG']['tl_paypal_login_settings']['errors']['invalid_credentials']);
         }
     }
 
-
     /**
-     * Initialize settings entry
-     */
-    public function initSettings(){
-        $result = \Database::getInstance()->prepare("SELECT count(id) as settings_count FROM tl_paypal_login_settings")->execute()->fetchAssoc();
-        if($result['settings_count'] == 0){
-            $settings = self::getEmptySettingsClass();
-            // create paypal-approved-member-group
-            $result = \Database::getInstance()->prepare("INSERT INTO `tl_member_group` (`tstamp`, `name`, `redirect`, `jumpTo`, `disable`, `start`, `stop`)VALUES(".time().", 'PayPal Paid', '', 0, '', '', '');")->execute();
-            // set created memer group as default
-            $settings->setMemberGroup($result->insertId);
-
-            // create initial settings row
-            \Database::getInstance()->prepare("REPLACE INTO tl_paypal_login_settings (id, paypal_client_id, paypal_secret, paypal_item_name, paypal_item_amount, paypal_currency_code, paypal_mode, member_group, redirect_after_approval, redirect_after_error, redirect_after_cancel) VALUES (1, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")->execute($settings->getClientId(), $settings->getSecret(), $settings->getItemName(), $settings->getItemAmount(), $settings->getCurrencyCode(), $settings->getMode(), $settings->getMemberGroup(), $settings->getRedirectAfterApproval(), $settings->getRedirectAfterError(), $settings->getRedirectAfterCancel());
-        }
-
-    }
-
-    /**
+     * Get PayPalSettings from database
+     *
      * @return PayPalSettings|null
      */
     public static function getInstance()
@@ -174,7 +94,9 @@ class PayPalSettings
     }
 
     /**
-     * @param $settings
+     * Creates settings object from data array
+     *
+     * @param PayPalSettings $settings
      * @return PayPalSettings
      */
     private static function createSettingsObject($settings_array)
@@ -194,6 +116,8 @@ class PayPalSettings
     }
 
     /**
+     * Creates empty settings object
+     *
      * @return PayPalSettings
      */
     private static function getEmptySettingsClass()
@@ -214,7 +138,26 @@ class PayPalSettings
     }
 
     /**
-     * @return mixed
+     * Initialize settings entry
+     */
+    public function initSettings()
+    {
+        $result = \Database::getInstance()->prepare("SELECT count(id) as settings_count FROM tl_paypal_login_settings")->execute()->fetchAssoc();
+        if ($result['settings_count'] == 0) {
+            $settings = self::getEmptySettingsClass();
+            // create paypal-approved-member-group
+            $result = \Database::getInstance()->prepare("INSERT INTO `tl_member_group` (`tstamp`, `name`, `redirect`, `jumpTo`, `disable`, `start`, `stop`)VALUES(" . time() . ", 'PayPal Paid', '', 0, '', '', '');")->execute();
+            // set created memer group as default
+            $settings->setMemberGroup($result->insertId);
+
+            // create initial settings row
+            \Database::getInstance()->prepare("REPLACE INTO tl_paypal_login_settings (id, paypal_client_id, paypal_secret, paypal_item_name, paypal_item_amount, paypal_currency_code, paypal_mode, member_group, redirect_after_approval, redirect_after_error, redirect_after_cancel) VALUES (1, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")->execute($settings->getClientId(), $settings->getSecret(), $settings->getItemName(), $settings->getItemAmount(), $settings->getCurrencyCode(), $settings->getMode(), $settings->getMemberGroup(), $settings->getRedirectAfterApproval(), $settings->getRedirectAfterError(), $settings->getRedirectAfterCancel());
+        }
+
+    }
+
+    /**
+     * @return string
      */
     public function getClientId()
     {
@@ -222,7 +165,7 @@ class PayPalSettings
     }
 
     /**
-     * @param mixed $client_id
+     * @param string $client_id
      */
     public function setClientId($client_id)
     {
@@ -230,7 +173,7 @@ class PayPalSettings
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getSecret()
     {
@@ -238,7 +181,7 @@ class PayPalSettings
     }
 
     /**
-     * @param mixed $secret
+     * @param string $secret
      */
     public function setSecret($secret)
     {
@@ -246,7 +189,7 @@ class PayPalSettings
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getItemName()
     {
@@ -254,7 +197,7 @@ class PayPalSettings
     }
 
     /**
-     * @param mixed $item_name
+     * @param string $item_name
      */
     public function setItemName($item_name)
     {
@@ -262,7 +205,7 @@ class PayPalSettings
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getItemAmount()
     {
@@ -270,7 +213,7 @@ class PayPalSettings
     }
 
     /**
-     * @param mixed $amount
+     * @param string $amount
      */
     public function setItemAmount($amount)
     {
@@ -293,7 +236,7 @@ class PayPalSettings
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getCurrencyCode()
     {
@@ -301,7 +244,7 @@ class PayPalSettings
     }
 
     /**
-     * @param mixed $currency_code
+     * @param string $currency_code
      */
     public function setCurrencyCode($currency_code)
     {
@@ -309,7 +252,7 @@ class PayPalSettings
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getMode()
     {
@@ -317,11 +260,75 @@ class PayPalSettings
     }
 
     /**
-     * @param mixed $mode
+     * @param string $mode
      */
     public function setMode($mode)
     {
         $this->mode = $mode;
+    }
+
+    /**
+     * @return integer
+     */
+    public function getMemberGroup()
+    {
+        return $this->member_group;
+    }
+
+    /**
+     * @param integer $member_group
+     */
+    public function setMemberGroup($member_group)
+    {
+        $this->member_group = $member_group;
+    }
+
+    /**
+     * @return integer
+     */
+    public function getRedirectAfterApproval()
+    {
+        return $this->redirect_after_approval;
+    }
+
+    /**
+     * @param integer $redirect_after_approval
+     */
+    public function setRedirectAfterApproval($redirect_after_approval)
+    {
+        $this->redirect_after_approval = $redirect_after_approval;
+    }
+
+    /**
+     * @return integer
+     */
+    public function getRedirectAfterError()
+    {
+        return $this->redirect_after_error;
+    }
+
+    /**
+     * @param integer $redirect_after_error
+     */
+    public function setRedirectAfterError($redirect_after_error)
+    {
+        $this->redirect_after_error = $redirect_after_error;
+    }
+
+    /**
+     * @return integer
+     */
+    public function getRedirectAfterCancel()
+    {
+        return $this->redirect_after_cancel;
+    }
+
+    /**
+     * @param integer $redirect_after_cancel
+     */
+    public function setRedirectAfterCancel($redirect_after_cancel)
+    {
+        $this->redirect_after_cancel = $redirect_after_cancel;
     }
 
 }
