@@ -14,6 +14,10 @@ if (!isset($_POST['REQUEST_TOKEN'])) {
 // Initialize the system
 require('../../../../system/initialize.php');
 
+
+// load language files
+\System::loadLanguageFile('tl_paypal_login_settings');
+
 // get token
 $token = \Input::get('token');
 
