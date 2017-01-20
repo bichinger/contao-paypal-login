@@ -152,7 +152,7 @@ class PayPalSettings
             $settings->setMemberGroup($result->insertId);
 
             // create initial settings row
-            \Database::getInstance()->prepare("REPLACE INTO tl_paypal_login_settings (id, paypal_client_id, paypal_secret, paypal_item_name, paypal_item_amount, paypal_currency_code, paypal_mode, member_group, redirect_after_approval, redirect_after_error, redirect_after_cancel) VALUES (1, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")->execute($settings->getClientId(), $settings->getSecret(), $settings->getItemName(), $settings->getItemAmount(), $settings->getCurrencyCode(), $settings->getMode(), $settings->getMemberGroup(), $settings->getRedirectAfterApproval(), $settings->getRedirectAfterError(), $settings->getRedirectAfterCancel());
+            \Database::getInstance()->prepare("REPLACE INTO tl_paypal_login_settings (id, paypal_client_id, paypal_secret, paypal_item_name, paypal_item_amount, paypal_currency_code, paypal_mode, member_group, redirect_after_approval, redirect_after_error, redirect_after_cancel) VALUES (1, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")->execute($settings->getClientId(), $settings->getSecret(), $settings->getItemName(), $settings->getItemAmount(), $settings->getCurrencyCode(), $settings->getMode(), $settings->getMemberGroup(), $settings->getRedirectAfterApproval(), $settings->getRedirectAfterError(), $settings->getRedirectAfterCancel())->execute();
         }
 
     }
