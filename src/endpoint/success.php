@@ -28,7 +28,7 @@ if (!empty($paymentId) && !empty($token) && !empty($PayerID)) {
         // complete payment
         $payment = \Bichinger\PayPalLogin\Endpoint::handlePayment($paymentId, $token, $PayerID);
         // complete registration
-        \System::log(sprintf($GLOBALS['TL_LANG']['MSC']['payment_approved'], $payment->getId()), __METHOD__, TL_CRON);
+        \System::log(sprintf($GLOBALS['TL_LANG']['MSC']['payment_approved'], $payment->getId()), __METHOD__, TL_GENERAL);
         // redirect
         \Bichinger\PayPalLogin\Paygate::approveMember($payment);
 
