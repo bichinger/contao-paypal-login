@@ -16,7 +16,7 @@ class ComposerStaticInit07cf958015b53c7f87ea1501385bcf3f
     public static $prefixDirsPsr4 = array (
         'Psr\\Log\\' => 
         array (
-            0 => __DIR__ . '/..' . '/psr/log/Psr/Log',
+            0 => __DIR__ . '/..',
         ),
     );
 
@@ -25,7 +25,7 @@ class ComposerStaticInit07cf958015b53c7f87ea1501385bcf3f
         array (
             'PayPal' => 
             array (
-                0 => __DIR__ . '/..' . '/paypal/rest-api-sdk-php/lib',
+                0 => __DIR__ . '/..',
             ),
         ),
     );

@@ -22,4 +22,4 @@ services:
     ports:
       - "80:80"
     volumes:
-      - ./src/:/var/www/html/system/modules/bichinger-paypal-login
+      - ./src/bichinger-paypal-login/:/var/www/html/system/modules/bichinger-paypal-login
