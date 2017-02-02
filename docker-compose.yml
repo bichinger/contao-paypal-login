@@ -1,6 +1,6 @@
 version: '2'
 services:
-  mysql:
+  paypal-login-db:
     image: registry.gitlab.com/bichinger/docker-percona:5.6
     ports:
       - "3306:3306"
@@ -11,11 +11,11 @@ services:
       - ./_local/mysql/prod:/var/lib/mysql
 
   paypal-login:
-    image: bichinger/docker-contao:3.5.24
+    image: registry.gitlab.com/bichinger/docker-contao:3.5.24-php56
     links:
-      - mysql
+      - paypal-login-db
     environment:
-      - CONTAO_MYSQL_HOST=mysql
+      - CONTAO_MYSQL_HOST=paypal-login-db
       - CONTAO_MYSQL_USERNAME=root
       - CONTAO_MYSQL_PASSWORD=root
       - CONTAO_MYSQL_DATABASE=contao
