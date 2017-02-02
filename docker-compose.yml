@@ -1,11 +1,11 @@
 version: '2'
 services:
   mysql:
-    image: bichinger/docker-percona:5.6-3
+    image: registry.gitlab.com/bichinger/docker-percona:5.6
     ports:
       - "3306:3306"
     environment:
-      - MYSQL_ROOT_PASSWORD=733Rg(36a4z27+99
+      - MYSQL_ROOT_PASSWORD=root
       - PERCONA_CREATE_DATABASE=contao
     volumes:
       - ./_local/mysql/prod:/var/lib/mysql
@@ -17,7 +17,7 @@ services:
     environment:
       - CONTAO_MYSQL_HOST=mysql
       - CONTAO_MYSQL_USERNAME=root
-      - CONTAO_MYSQL_PASSWORD=733Rg(36a4z27+99
+      - CONTAO_MYSQL_PASSWORD=root
       - CONTAO_MYSQL_DATABASE=contao
     ports:
       - "80:80"
