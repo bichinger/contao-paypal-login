@@ -71,11 +71,16 @@ class Paygate
      */
     public function redirectMemberToPayPal($member_id, $member_data, $module)
     {
-        // get paypal settings
-        $settings = PayPalSettings::getInstance();
-        // do redirect
-        PayPalRequest::redirectMemeberToPayPal($member_id, $settings);
-        exit();
+        // check if paypal login activated for this module
+        if($module->enable_paypal_login == "1") {
+            // get paypal settings
+            $settings = PayPalSettings::getInstance();
+            // do redirect
+            PayPalRequest::redirectMemeberToPayPal($member_id, $settings);
+            exit();
+        }else{
+            return;
+        }
     }
 
 
