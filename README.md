@@ -4,7 +4,7 @@ Dieses Modul erlaubt es, einen bezahlten Mitgliederbereich auf Basis der Contao-
 ## Anforderungen
 
 * Contao 3.5.x
-* PHP mit curl, json und openssl Extensions
+* PHP 5.6 mit curl, json und openssl Extensions
 
 ## Installationsanleitung
 
