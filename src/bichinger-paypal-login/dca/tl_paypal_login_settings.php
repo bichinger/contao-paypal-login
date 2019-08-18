@@ -7,7 +7,7 @@
  *
  * @package   PayPalLogin
  * @author    Bichinger Software & Consulting
- * @license   -
+ * @license   LGPL3+
  * @copyright Bichinger Software & Consulting 2017
  */
 
